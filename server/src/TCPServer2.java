@@ -1,5 +1,3 @@
-package py.una.server.tcp;
-
 import java.net.*;
 import java.io.*;
 
