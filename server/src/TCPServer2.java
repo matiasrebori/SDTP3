@@ -106,7 +106,17 @@ public class TCPServer2 {
 
 	public static void main(String[] args) throws IOException {
 		TCPServer2 server = new TCPServer2();
-		server.start(6666);
+		server.start(17015);
+		System.out.println( server.serverSocket.getInetAddress() );
+		System.out.println( server.serverSocket.getLocalPort() );
+		System.out.println( server.serverSocket.getLocalSocketAddress() );
+		
+		System.out.println( server.clientSocket.getLocalPort() );
+		System.out.println( server.clientSocket.getPort() );
+		System.out.println( server.clientSocket.getInetAddress() );
+		System.out.println( server.clientSocket.getLocalAddress() );
+		System.out.println( server.clientSocket.getRemoteSocketAddress());
+		
 		server.sendMessage("Bienvenido");
 		server.communication();
 	}
