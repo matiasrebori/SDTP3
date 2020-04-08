@@ -103,14 +103,7 @@ public class TCPClient {
 
 	public static void main(String[] args) throws IOException {
 		TCPClient client = new TCPClient();
-		client.start("181.121.86.143", 17015);
-		System.out.println( client.serverSocket.getInetAddress() );
-		System.out.println( client.serverSocket.getLocalAddress() );
-		System.out.println( client.serverSocket.getPort() );
-		System.out.println( client.serverSocket.getLocalPort() );
-		System.out.println( client.serverSocket.getInputStream() );
-		System.out.println( client.serverSocket.getOutputStream() );
-		
+		client.start("localhost", 17015);
 		client.communication();
 		client.stop();
 	}
