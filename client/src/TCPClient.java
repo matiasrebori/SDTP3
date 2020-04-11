@@ -103,7 +103,7 @@ public class TCPClient {
 
 	public static void main(String[] args) throws IOException {
 		TCPClient client = new TCPClient();
-		client.start("localhost", 17015);
+		client.start("181.121.86.143", 17015);
 		client.communication();
 		client.stop();
 	}

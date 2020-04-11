@@ -1,33 +1,19 @@
 import java.net.*;
 import java.io.*;
 
-public class TCPServer2 {
-	ServerSocket serverSocket;
+public class TCPServerHilo extends Thread{
+	String mensaje;
+	TCPMultiServer server;
 	Socket clientSocket;
 	PrintWriter out;
 	BufferedReader in;
 	BufferedReader stdIn;
-
-	/**
-	 * Inicia la conexion y parametros requeridos
-	 * @param port puerto de escucha
-	 * @throws IOException
-	 */
-	public void start(int port) throws IOException {
-		// iniciamos el ServerSocket
-		try {
-			serverSocket = new ServerSocket(port);
-		} catch (IOException e) {
-			System.err.println("No se puede abrir el puerto: " + port);
-			System.exit(1);
-		}
-		// iniciamos el ClientSocket
-		try {
-			clientSocket = serverSocket.accept(); // escucha por una conexion y la acepta, operacion bloqueante
-		} catch (IOException e) {
-			System.err.println("Fallo el accept().");
-			System.exit(1);
-		}
+	
+	public TCPServerHilo( Socket socket, TCPMultiServer servidor) throws IOException {
+        super("TCPServerHilo");
+        clientSocket = socket;
+		server = servidor;
+		
 		// buffer enviamos nosotros
 		out = new PrintWriter(clientSocket.getOutputStream(), true);
 		// buffer recibimos del cliente
@@ -36,15 +22,15 @@ public class TCPServer2 {
 		stdIn = new BufferedReader(new InputStreamReader(System.in));
 	}
 
+
 	/**
 	 * cierra todas las variables utilizadas
 	 */
-	public void stop() throws IOException {
+	public void close() throws IOException {
 		in.close();
 		out.close();
 		stdIn.close();
 		clientSocket.close();
-		serverSocket.close();
 	}
 
 	/**
@@ -90,6 +76,8 @@ public class TCPServer2 {
 	{
 		String inputLine, outputLine;
 		
+
+		
 		while (true) {
 			//leemos mensaje del cliente
 			inputLine = readMessage();
@@ -97,17 +85,47 @@ public class TCPServer2 {
 			printMessage(inputLine);
 			if (inputLine.equals("Bye")) {
 				break;
+			} else if( inputLine.equals("conectar") ) {
+				connectToUser();
 			}
 			//leemos por teclado y enviamos al cliente
 			outputLine = read();
 			sendMessage(outputLine);
 		}
 	}
-
-	public static void main(String[] args) throws IOException {
-		TCPServer2 server = new TCPServer2();
-		server.start(17015);		
-		server.sendMessage("Bienvenido");
-		server.communication();
+	
+	public void setUser() throws IOException {
+		sendMessage("Ingrese su usuario");
+		int index = server.hilosClientes.indexOf(this);
+		System.out.println("Index de este hilo en hilosClientes:" + index);
+		String user = readMessage();
+		server.usuarios.add( index , user );
+		System.out.println("Usuario:" + user + " añadido en index:" + index);
+		sendMessage("Usuario Añadido");
+		//printMessage( server.usuarios.get(0) );
+	}
+	
+	public void connectToUser() throws IOException {
+		sendMessage("ingrese el nombre del otro cliente");
+		String user = readMessage();
+		int index = server.usuarios.indexOf(user);
+		sendMessage("Escriba un mensaje para enviar al otro cliente");
+		String word = readMessage();
+		server.hilosClientes.get(index).out.println(word);
+	}
+	
+	/**
+	 *
+	 */
+	public void run() {
+		try {
+			//sendMessage("Bienvenido");
+			setUser();
+			communication();
+			close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }
