@@ -1,11 +1,13 @@
 import java.io.*;
 import java.net.*;
 
-public class TCPClient {
+public class TCPClient  implements Runnable{
 	Socket serverSocket;
 	PrintWriter out;
 	BufferedReader in;
 	BufferedReader stdIn;
+	
+	int cortar=0; 
 
 	/**
 	 * Inicia la conexion y parametros requeridos
@@ -85,14 +87,20 @@ public class TCPClient {
 	 */
 	public void communication() throws IOException
 	{
-		String fromServer,fromUser;
+		String /*fromServer,*/fromUser;
+		
+		Thread mihilo=new Thread(this); // hilo que se encarga de escuchar
+		mihilo.start();
+		
+		
+		
 		//cuidado con la linea de abajo xd
-		while ( ( fromServer = readMessage() ) != null) {
-			printMessage(fromServer);
+		while ( /*( fromServer = readMessage() ) != null*/cortar==0) {
+			/*printMessage(fromServer);
 			if (fromServer.equals("Bye")) {
 				break;
 			}
-			// leer teclado
+			// leer teclado*/
 			fromUser = read();
 			// enviamos al servidor
 			sendMessage(fromUser);
@@ -103,9 +111,37 @@ public class TCPClient {
 
 	public static void main(String[] args) throws IOException {
 		TCPClient client = new TCPClient();
-		client.start("181.121.86.143", 17015);
+		client.start("181.126.221.195", 6789);    //181.121.86.143	 181.126.221.195
 		client.communication();
+		
 		client.stop();
 	}
+
+	@Override
+	public void run() {
+		String fromServer/*,fromUser*/;
+		//cuidado con la linea de abajo xd
+		try {
+			while ( /*( fromServer = readMessage() ) != null*/true) {
+				fromServer = readMessage();
+				printMessage(fromServer);
+				if (fromServer.equals("Bye")) {
+					
+					cortar=1;
+					break;
+				}
+				/* leer teclado
+				fromUser = read();
+				// enviamos al servidor
+				sendMessage(fromUser);
+				*/
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 }

@@ -1,4 +1,5 @@
 import java.net.*;
+import java.util.ArrayList;
 import java.io.*;
 
 public class TCPServerHilo extends Thread{
@@ -100,18 +101,27 @@ public class TCPServerHilo extends Thread{
 		System.out.println("Index de este hilo en hilosClientes:" + index);
 		String user = readMessage();
 		server.usuarios.add( index , user );
-		System.out.println("Usuario:" + user + " aÃ±adido en index:" + index);
-		sendMessage("Usuario AÃ±adido");
+		System.out.println("Usuario:" + user + " añadido en index:" + index);
+		sendMessage("Usuario Añadido");
 		//printMessage( server.usuarios.get(0) );
 	}
 	
 	public void connectToUser() throws IOException {
+		String word;
+		
 		sendMessage("ingrese el nombre del otro cliente");
 		String user = readMessage();
 		int index = server.usuarios.indexOf(user);
 		sendMessage("Escriba un mensaje para enviar al otro cliente");
-		String word = readMessage();
-		server.hilosClientes.get(index).out.println(word);
+		word = readMessage();
+		
+		while(!word.equals("Bye"))
+		{
+			
+			server.hilosClientes.get(index).out.println(word);
+			word = readMessage();
+		}
+		
 	}
 	
 	/**
@@ -128,4 +138,53 @@ public class TCPServerHilo extends Thread{
 			e1.printStackTrace();
 		}
 	}
+	
 }
+/*
+class escribir implements Runnable
+{
+	
+	PrintWriter out;
+	BufferedReader stdIn;
+	
+	public PrintWriter getOut() {
+		return out;
+	}
+
+	public void setOut(PrintWriter out) {
+		this.out = out;
+	}
+
+	public BufferedReader getStdIn() {
+		return stdIn;
+	}
+
+	public void setStdIn(BufferedReader stdIn) {
+		this.stdIn = stdIn;
+	}
+
+	@Override
+	public void run() {
+		
+		String outputLine;
+		
+		try {
+			while (true) {
+				//leemos mensaje del cliente
+				//leemos por teclado y enviamos al cliente
+				
+				outputLine = stdIn.readLine();
+				
+				out.println(outputLine );
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+}
+
+*/
+
