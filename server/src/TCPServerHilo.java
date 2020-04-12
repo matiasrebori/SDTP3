@@ -81,16 +81,18 @@ public class TCPServerHilo extends Thread{
 		while (true) {
 			//leemos mensaje del cliente
 			inputLine = readMessage();
-			//imprimimos el mensaje en consola
-			printMessage(inputLine);
 			if (inputLine.equals("Bye")) {
 				break;
 			} else if( inputLine.equals("conectar") ) {
 				connectToUser();
+				inputLine = readMessage();
+				
 			}
+			/*
 			//leemos por teclado y enviamos al cliente
 			outputLine = read();
-			sendMessage(outputLine);
+			*/
+			sendMessage(inputLine);
 		}
 	}
 	
@@ -112,14 +114,19 @@ public class TCPServerHilo extends Thread{
 		String user = readMessage();
 		int index = server.usuarios.indexOf(user);
 		sendMessage("Escriba un mensaje para enviar al otro cliente");
+		PrintWriter temp  = out;
+		out = server.hilosClientes.get(index).out;
+		server.hilosClientes.get(index).out = temp;
+		/*
 		word = readMessage();
-		
+
 		while(!word.equals("Bye"))
 		{
 			
 			server.hilosClientes.get(index).out.println(word);
 			word = readMessage();
 		}
+		*/
 		
 	}
 	
