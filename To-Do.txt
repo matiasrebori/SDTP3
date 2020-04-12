@@ -1,0 +1,2 @@
+-el metodo stop para parar un thread esta deprecado https://www.baeldung.com/java-thread-stop implementar una forma segura de detener un thread: TCPClient
+-parar el programa : TCPClient

@@ -1,5 +1,4 @@
 import java.net.*;
-import java.util.ArrayList;
 import java.io.*;
 
 public class TCPServerHilo extends Thread{
@@ -101,8 +100,8 @@ public class TCPServerHilo extends Thread{
 		System.out.println("Index de este hilo en hilosClientes:" + index);
 		String user = readMessage();
 		server.usuarios.add( index , user );
-		System.out.println("Usuario:" + user + " añadido en index:" + index);
-		sendMessage("Usuario Añadido");
+		System.out.println("Usuario:" + user + " aï¿½adido en index:" + index);
+		sendMessage("Usuario Aï¿½adido");
 		//printMessage( server.usuarios.get(0) );
 	}
 	

@@ -29,7 +29,6 @@ public class TCPMultiServer {
            
             hilo.start();
             
-            //hilo.ejecutar();
            
         }
 
