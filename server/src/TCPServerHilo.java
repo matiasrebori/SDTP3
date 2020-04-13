@@ -2,7 +2,6 @@ import java.net.*;
 import java.io.*;
 
 public class TCPServerHilo extends Thread{
-	String mensaje;
 	TCPMultiServer server;
 	Socket clientSocket;
 	PrintWriter out;
@@ -88,10 +87,7 @@ public class TCPServerHilo extends Thread{
 				inputLine = readMessage();
 				
 			}
-			/*
-			//leemos por teclado y enviamos al cliente
-			outputLine = read();
-			*/
+			//Enviamos al cliente
 			sendMessage(inputLine);
 		}
 	}
@@ -117,22 +113,10 @@ public class TCPServerHilo extends Thread{
 		PrintWriter temp  = out;
 		out = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = temp;
-		/*
-		word = readMessage();
-
-		while(!word.equals("Bye"))
-		{
-			
-			server.hilosClientes.get(index).out.println(word);
-			word = readMessage();
-		}
-		*/
-		
+	
 	}
 	
-	/**
-	 *
-	 */
+
 	public void run() {
 		try {
 			//sendMessage("Bienvenido");
@@ -146,51 +130,4 @@ public class TCPServerHilo extends Thread{
 	}
 	
 }
-/*
-class escribir implements Runnable
-{
-	
-	PrintWriter out;
-	BufferedReader stdIn;
-	
-	public PrintWriter getOut() {
-		return out;
-	}
-
-	public void setOut(PrintWriter out) {
-		this.out = out;
-	}
-
-	public BufferedReader getStdIn() {
-		return stdIn;
-	}
-
-	public void setStdIn(BufferedReader stdIn) {
-		this.stdIn = stdIn;
-	}
-
-	@Override
-	public void run() {
-		
-		String outputLine;
-		
-		try {
-			while (true) {
-				//leemos mensaje del cliente
-				//leemos por teclado y enviamos al cliente
-				
-				outputLine = stdIn.readLine();
-				
-				out.println(outputLine );
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-
-}
-
-*/
 
