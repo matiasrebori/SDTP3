@@ -104,8 +104,7 @@ public class TCPServerHilo extends Thread{
 	}
 	
 	public void connectToUser() throws IOException {
-		String word;
-		
+
 		sendMessage("ingrese el nombre del otro cliente");
 		String user = readMessage();
 		int index = server.usuarios.indexOf(user);
