@@ -45,22 +45,43 @@ public class Message {
 	 * @return Objeto Message
 	 * @throws ParseException
 	 */
-	public static Message toMessage(String str) throws ParseException {
+	public void toMessage(String str) {
 
-		JSONParser parser = new JSONParser();
-		Object obj = parser.parse(str.trim());
+		try {
+			//parsear
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(str.trim());
+			JSONObject jsonObject = (JSONObject) obj;
+			//extraer variables
+			Long aux = (Long)jsonObject.get("status");
+			Integer status = new Integer( aux.intValue() );
+			String statusDetail = (String)jsonObject.get("statusDetail");
+			aux = (Long)jsonObject.get("operation");
+			Integer operation = new Integer( aux.intValue() );
+			String message = (String)jsonObject.get("message");
+			//asignar variables
+			this.status = status;
+			this.statusDetail = statusDetail;
+			this.operation = operation;
+			this.message = message;
 
-		JSONObject jsonObject = (JSONObject) obj;
-		Long aux = (Long)jsonObject.get("status");
-		Integer status = new Integer( aux.intValue() );
-		String statusDetail = (String)jsonObject.get("statusDetail");
-		aux = (Long)jsonObject.get("operation");
-		Integer operation = new Integer( aux.intValue() );
-		String message = (String)jsonObject.get("message");
-
-		Message msg = new Message(status,statusDetail,operation,message);
-		return msg;
-
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createMessage(String word) {
+		if( word.equals("conectar") ) {
+			status = 0;
+			statusDetail = "ok";
+			operation = 2;
+			message = word;
+		}else {
+			status = 0;
+			statusDetail = "ok";
+			operation = 3;
+			message = word;
+		}
 	}
 	
 	public Integer getStatus() {
@@ -99,7 +120,10 @@ public class Message {
 		Message m = new Message( (Integer)1, "ok", (Integer)3 ,"Hola skere como estas");
 		String s = m.toJSON();
 		System.out.println(s);
-		Message me = toMessage(s);
+		Message me = new Message();
+		me.toMessage(s);
+		System.out.println(  me.getStatus() + " " + me.getStatusDetail()   + " " + me.getOperation()  + " " + me.getMessage() );
+		me.createMessage("conectar");
 		System.out.println(  me.getStatus() + " " + me.getStatusDetail()   + " " + me.getOperation()  + " " + me.getMessage() );
 	}
 

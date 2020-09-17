@@ -5,3 +5,4 @@
 -Terminar llamada, propuesto por UDP, seria devolver los streams originales  : TCPServerHilo 
 -GUI : TCPClient
 -Log , creo que hay una clase java que ya hace esto
+-al cerrar un cliente en TCPServerHilo metodo communication -> readmessage -> toMessage de la clase Message tira nullpointerexception valor de str = null :TCPServerHilo

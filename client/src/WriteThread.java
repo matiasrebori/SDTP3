@@ -38,11 +38,16 @@ public class WriteThread extends Thread{
 	
 	public void run()
 	{
+		Message msg = new Message();
 		String fromUser = null;		
 		while ( true ) {
 			try {
 				// leer teclado
 				fromUser = read();
+				//crear objeto Message a partir de lo que dice el cliente
+				msg.createMessage(fromUser);
+				//convertir objeto a string notacion JSON
+				fromUser = msg.toJSON();
 				// enviamos al servidor
 				sendMessage(fromUser);
 				

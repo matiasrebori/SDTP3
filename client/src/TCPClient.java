@@ -64,7 +64,7 @@ public class TCPClient {
 
 	public static void main(String[] args) throws IOException {
 		TCPClient client = new TCPClient();
-		client.start("localhost", 6789);    //181.121.86.143	 181.126.221.195
+		client.start("localhost", 17015);    //181.121.86.143	 181.126.221.195
 		client.ejecutar();
 		
 	}

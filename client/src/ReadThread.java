@@ -34,10 +34,15 @@ public class ReadThread extends Thread{
 	 */
 	public void run() {
 		String fromServer;
+		Message msg = new Message();
 		try {
 			while ( true ) {
 				//leer del buffer
 				fromServer = readMessage();
+				//convertir de String notacion JSON a objeto Message
+				msg.toMessage(fromServer);
+				//extraer el mesaje para imprimir al cliente
+				fromServer= msg.getMessage();
 				//imprimir en pantalla
 				printMessage(fromServer);
 				

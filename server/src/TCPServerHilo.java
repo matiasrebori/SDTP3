@@ -7,6 +7,7 @@ public class TCPServerHilo extends Thread{
 	PrintWriter out;
 	BufferedReader in;
 	BufferedReader stdIn;
+	Message msg;
 	
 	public TCPServerHilo( Socket socket, TCPMultiServer servidor) throws IOException {
         super("TCPServerHilo");
@@ -19,6 +20,9 @@ public class TCPServerHilo extends Thread{
 		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		// buffer para escribir por teclado
 		stdIn = new BufferedReader(new InputStreamReader(System.in));
+		
+		//Mensaje
+		msg = new Message();
 	}
 
 
@@ -33,21 +37,26 @@ public class TCPServerHilo extends Thread{
 	}
 
 	/**
-	 * envia un mensaje al cliente
+	 * convierte una palabra en objeto Message luego lo pasa a notacion JSON y lo envia al stream del cliente
 	 * @param word
 	 * 
 	 */
 	public void sendMessage(String word) {
-		out.println(word);
+		//convierto la palabra en objeto Message
+		msg.createMessage(word);
+		//enviamos el objeto convertido a String en notacion JSON
+		out.println( msg.toJSON() ) ;
 	}
 
 	/**
-	 * lee un mensaje enviado por el cliente
-	 * @return Mensaje enviado por el cliente
+	 * lee un String que es el mensaje enviado por el cliente en notacion JSON lo convierte a objeto y guarda en varable de clase msg 
+	 * @return String Mensaje enviado por el cliente
 	 * @throws IOException
 	 */
 	public String readMessage() throws IOException {
-		return in.readLine();
+		String word =  in.readLine();
+		msg.toMessage(word);
+		return msg.getMessage();
 	}
 
 	/**
@@ -74,15 +83,17 @@ public class TCPServerHilo extends Thread{
 	public void communication() throws IOException
 	{
 		String inputLine, outputLine;
-		
+		Integer operation;
 
 		
 		while (true) {
-			//leemos mensaje del cliente
+			//leemos mensaje del cliente, viene en notacion JSON , lo guardamos en msg y extraemos el mensaje
 			inputLine = readMessage();
-			if (inputLine.equals("Bye")) {
+			//extraer codigo de operacion
+			operation = msg.getOperation();
+			if (operation.equals(4)) {
 				break;
-			} else if( inputLine.equals("conectar") ) {
+			} else if( operation.equals(2) ) {
 				connectToUser();
 				inputLine = readMessage();
 				
