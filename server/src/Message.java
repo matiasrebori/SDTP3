@@ -83,6 +83,23 @@ public class Message {
 			message = word;
 		}
 	}
+
+	public void createMessage(String word , Integer operation ) {
+			status = 0;
+			statusDetail = "ok";
+			operation = operation;
+			message = word;
+
+	}
+
+	public void createMessage(Integer operation ) {
+		status = 0;
+		statusDetail = "ok";
+		operation = operation;
+		message = "";
+
+	}
+
 	
 	public Integer getStatus() {
 		return status;
