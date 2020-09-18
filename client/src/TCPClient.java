@@ -20,7 +20,6 @@ public class TCPClient {
 		// iniciamos el serverSocket
 		try {
 			serverSocket = new Socket(ip, port);
-
 		} catch (UnknownHostException e) {
 			System.err.println("Host desconocido");
 			System.exit(1);
@@ -64,7 +63,7 @@ public class TCPClient {
 
 	public static void main(String[] args) throws IOException {
 		TCPClient client = new TCPClient();
-		client.start("localhost", 17015);    //181.121.86.143	 181.126.221.195
+		client.start("181.121.86.143", 17015);    //181.121.86.143	 181.126.221.195
 		client.ejecutar();
 		
 	}
