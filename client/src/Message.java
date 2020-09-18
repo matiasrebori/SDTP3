@@ -71,7 +71,7 @@ public class Message {
 	}
 
 	public void createMessage(String word) {
-		if( word.equals("conectar") ) {
+		if( word.equals("llamar") ) {
 			status = 0;
 			statusDetail = "ok";
 			operation = 2;
