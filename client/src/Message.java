@@ -69,7 +69,7 @@ public class Message {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void createMessage(String word) {
 		if( word.equals("conectar") ) {
 			status = 0;
@@ -82,6 +82,22 @@ public class Message {
 			operation = 3;
 			message = word;
 		}
+	}
+
+	public void createMessage(String word , Integer operation ) {
+		status = 0;
+		statusDetail = "ok";
+		operation = operation;
+		message = word;
+
+	}
+
+	public void createMessage(Integer operation ) {
+		status = 0;
+		statusDetail = "ok";
+		operation = operation;
+		message = "";
+
 	}
 	
 	public Integer getStatus() {

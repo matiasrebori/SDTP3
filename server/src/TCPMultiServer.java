@@ -17,10 +17,10 @@ public class TCPMultiServer {
         try {
             serverSocket = new ServerSocket(17015);
         } catch (IOException e) {
-            System.err.println("No se puede abrir el puerto: 4444.");
+            System.err.println("No se puede abrir el puerto: 17015.");
             System.exit(1);
         }
-        System.out.println("Puerto abierto: 4444.");
+        System.out.println("Puerto abierto: 17015.");
 
         while (listening) {
         	
