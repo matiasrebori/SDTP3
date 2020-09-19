@@ -10,7 +10,8 @@ public class TCPServerHilo extends Thread{
 	Message msg;
 
 	String user1;
-	
+	Boolean disponible;
+
 	public TCPServerHilo( Socket socket, TCPMultiServer servidor) throws IOException {
         super("TCPServerHilo");
         clientSocket = socket;
@@ -131,13 +132,23 @@ public class TCPServerHilo extends Thread{
 		server.usuarios.add( index , user );
 		System.out.println("Usuario:" + user + " a�adido en index:" + index);
 		sendMessage("Usuario A�adido");
+		disponible=true;
 		//printMessage( server.usuarios.get(0) );
 	}
-	
+	public void setDisponible(boolean b){
+		this.disponible=b;
+	}
+	public boolean getDisponible() {
+		return this.disponible;
+	}
 	public void connectToUse(String user) throws IOException {
 
 		Integer index = server.usuarios.indexOf(user);
 		PrintWriter temp  = out;
+		setDisponible(false);// marcar como ocupado el hilo
+		server.hilosClientes.get(index).setDisponible(false);// marcar como ocupado el hilo
+		sendMessage("conectado con: "+user);
+		sendMessage("conectado con: "+user1,server.hilosClientes.get(index).out,3);
 		out = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = temp;
 	
@@ -149,9 +160,15 @@ public class TCPServerHilo extends Thread{
 		String user = readMessage();
 		Integer index = server.usuarios.indexOf(user);
 		PrintWriter temp;
-		temp= server.hilosClientes.get(index).out;
-		sendMessage(user1,temp,5);
-
+		boolean disp;
+		disp=server.hilosClientes.get(index).getDisponible();
+		if(disp) {
+			temp = server.hilosClientes.get(index).out;
+			sendMessage(user1, temp, 5);
+		}
+		else{
+			sendMessage("el usuario: "+user+" actualmente esta en una llamada");
+		}
 	}
 	public void conectar(String user) throws IOException {
 
@@ -162,6 +179,7 @@ public class TCPServerHilo extends Thread{
 			PrintWriter temp;
 			temp = server.hilosClientes.get(index).out;
 			sendMessage(user1, temp, 6);
+
 		}
 		else{
 			sendMessage("llamada rechazada");
