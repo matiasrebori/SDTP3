@@ -56,7 +56,7 @@ public class ReadThread extends Thread{
 				//extraer el mesaje para imprimir al cliente
 				fromServer= msg.getMessage();
 				op= msg.getOperation();
-				if(op!=5 || op!=6) {
+				if(op!=5 && op!=6) {
 					//imprimir en pantalla
 					printMessage(fromServer);
 				}else{

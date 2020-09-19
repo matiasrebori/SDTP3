@@ -54,10 +54,7 @@ public class TCPServerHilo extends Thread{
 
 		msg.createMessage(user,op);
 		//enviamos el objeto convertido a String en notacion JSON
-
 		salida.println(msg.toJSON()) ;
-
-
 	}
 	/**
 	 * lee un String que es el mensaje enviado por el cliente en notacion JSON lo convierte a objeto y guarda en varable de clase msg 
@@ -120,7 +117,7 @@ public class TCPServerHilo extends Thread{
 				conectar(inputLine);
 			}else if(operation.equals(6)){
 				connectToUse(inputLine);
-			}
+			}else if(operation.equals(3))
 			sendMessage(inputLine);
 		}
 	}
@@ -145,49 +142,7 @@ public class TCPServerHilo extends Thread{
 		server.hilosClientes.get(index).out = temp;
 	
 	}
-	/*public void iniciarllamada() throws IOException {
 
-		sendMessage("ingrese el nombre del otro cliente");
-		String user = readMessage();
-		Integer index = server.usuarios.indexOf(user);
-		PrintWriter temp;
-		BufferedReader temp2;
-		String g;
-		temp= server.hilosClientes.get(index).out;
-		temp2= server.hilosClientes.get(index).in;
-		sendMessage(user1,temp,5);
-		String entrada= readMessage(temp2);
-		sendMessage("respuesta del estimado "+entrada);
-		if(entrada.equals("y")) {
-			sendMessage("conectado");
-			connectToUse(index);
-		}else
-			sendMessage("no se pudo conectar");
-
-	}*/
-	/*public void conect() throws IOException {
-
-		sendMessage("ingrese el nombre del otro cliente");
-		String user = readMessage();
-		Integer index = server.usuarios.indexOf(user);
-		PrintWriter temp;
-		String temp2;
-
-		temp= server.hilosClientes.get(index).out;
-		sendMessage(user1,temp,5);
-		temp2= server.hilosClientes.get(index).g;
-
-		while(temp2==null){
-			sendMessage("respuesta del estimado "+temp2);
-			temp2= server.hilosClientes.get(index).g;
-		}
-		if(temp2.equals("y")) {
-			sendMessage("conectado");
-			connectToUse(index);
-		}else
-			sendMessage("no se pudo conectar");
-
-	}*/
 	public void conectarllamada() throws IOException {
 
 		sendMessage("ingrese el nombre del otro cliente");
