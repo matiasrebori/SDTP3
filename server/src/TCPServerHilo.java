@@ -16,6 +16,7 @@ public class TCPServerHilo extends Thread{
         super("TCPServerHilo");
         clientSocket = socket;
 		server = servidor;
+		server.usuarios.add("");
 		
 		// buffer enviamos nosotros
 		out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -125,14 +126,23 @@ public class TCPServerHilo extends Thread{
 	
 	public void setUser() throws IOException {
 		sendMessage("Ingrese su usuario");
-		int index = server.hilosClientes.indexOf(this);
-		System.out.println("Index de este hilo en hilosClientes:" + index);
-		String user = readMessage();
-		user1=user;
-		server.usuarios.add( index , user );
-		System.out.println("Usuario:" + user + " a�adido en index:" + index);
-		sendMessage("Usuario A�adido");
-		disponible=true;
+		String user;
+		boolean existe=true;
+		do {
+			user = readMessage();
+			existe=server.usuarios.contains(user);
+			if (!existe) {
+				int index = server.hilosClientes.indexOf(this);
+				System.out.println("Index de este hilo en hilosClientes:" + index);
+				user1 = user;
+				server.usuarios.add(index, user);
+				System.out.println("Usuario:" + user + " a�adido en index:" + index);
+				sendMessage("Usuario A�adido");
+				disponible = true;
+			} else {
+				sendMessage("el usuario " + user + " ya existe, ingrese otro nombre");
+			}
+		}while(existe);
 		//printMessage( server.usuarios.get(0) );
 	}
 	public void setDisponible(boolean b){
@@ -158,7 +168,8 @@ public class TCPServerHilo extends Thread{
 
 		sendMessage("ingrese el nombre del otro cliente");
 		String user = readMessage();
-		if(!user.equals(user1)) {
+		boolean existe= server.usuarios.contains(user);
+		if(!user.equals(user1) && existe) {
 			Integer index = server.usuarios.indexOf(user);
 			PrintWriter temp;
 			boolean disp;
@@ -170,8 +181,11 @@ public class TCPServerHilo extends Thread{
 			} else {
 				sendMessage("el usuario: " + user + " actualmente esta en una llamada");
 			}
+		}else if(user.equals(user1)){
+
+			sendMessage("no puede llamarse a si mismo" ); // para que no se llame a si mismo
 		}else{
-			sendMessage("no puede llamarse a si mismo");
+			sendMessage("el usuario al que quiere llamar no existe");// para que no llame al alguien no existente
 		}
 	}
 	public void conectar(String user) throws IOException {
