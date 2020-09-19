@@ -84,18 +84,18 @@ public class Message {
 		}
 	}
 
-	public void createMessage(String word , Integer operation ) {
+	public void createMessage(String word , Integer op ) {
 			status = 0;
 			statusDetail = "ok";
-			operation = operation;
+			operation = op;
 			message = word;
 
 	}
 
-	public void createMessage(Integer operation ) {
+	public void createMessage(Integer op ) {
 		status = 0;
 		statusDetail = "ok";
-		operation = operation;
+		operation = op;
 		message = "";
 
 	}
