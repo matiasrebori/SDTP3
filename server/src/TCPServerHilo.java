@@ -108,7 +108,10 @@ public class TCPServerHilo extends Thread{
 			//g=inputLine;
 			operation = msg.getOperation();
 
-			if (operation.equals(4)) {
+
+			if (operation.equals(1)) {
+				listUsers();
+			} else if (operation.equals(4)) {
 				break;
 			} else if( operation.equals(2) ) {
 				conectarllamada();
@@ -123,7 +126,19 @@ public class TCPServerHilo extends Thread{
 			sendMessage(inputLine);
 		}
 	}
-	
+
+	public void listUsers() {
+	String lista="";
+		sendMessage("Lista de Usuarios conectados");
+
+		for (String i : server.usuarios) {
+			if(!i.equals(""))
+				lista = "* "+i+"\n"+lista;
+		}
+
+		sendMessage(lista);
+	}
+
 	public void setUser() throws IOException {
 		sendMessage("Ingrese su usuario");
 		String user;

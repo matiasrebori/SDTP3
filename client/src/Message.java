@@ -72,7 +72,13 @@ public class Message {
 
 	public void createMessage(String word) {
 
-		if( word.equals("llamar") ) {
+		if( word.equals("lista") ) {
+			status = 0;
+			statusDetail = "ok";
+			operation = 1;
+			message = word;
+		}
+		else if( word.equals("llamar") ) {
 			status = 0;
 			statusDetail = "ok";
 			operation = 2;

@@ -71,7 +71,13 @@ public class Message {
 	}
 	
 	public void createMessage(String word) {
-		if( word.equals("conectar") ) {
+		if( word.equals("lista") ) {
+			status = 0;
+			statusDetail = "ok";
+			operation = 1;
+			message = word;
+		}
+		else if( word.equals("conectar") ) {
 			status = 0;
 			statusDetail = "ok";
 			operation = 2;
