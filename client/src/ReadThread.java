@@ -29,7 +29,7 @@ public class ReadThread extends Thread{
 	 * 
 	 */
 	public void printMessage(String word) {
-		System.out.println("Servidor: " + word);
+		System.out.println(word);
 	}
 	
 	/**

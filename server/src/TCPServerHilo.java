@@ -147,8 +147,8 @@ public class TCPServerHilo extends Thread{
 		PrintWriter temp  = out;
 		setDisponible(false);// marcar como ocupado el hilo
 		server.hilosClientes.get(index).setDisponible(false);// marcar como ocupado el hilo
-		sendMessage("conectado con: "+user);
-		sendMessage("conectado con: "+user1,server.hilosClientes.get(index).out,3);
+		sendMessage("conectado con "+user);
+		sendMessage("conectado con "+user1,server.hilosClientes.get(index).out,3);
 		out = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = temp;
 	
@@ -158,32 +158,45 @@ public class TCPServerHilo extends Thread{
 
 		sendMessage("ingrese el nombre del otro cliente");
 		String user = readMessage();
-		Integer index = server.usuarios.indexOf(user);
-		PrintWriter temp;
-		boolean disp;
-		disp=server.hilosClientes.get(index).getDisponible();
-		if(disp) {
-			temp = server.hilosClientes.get(index).out;
-			sendMessage(user1, temp, 5);
-		}
-		else{
-			sendMessage("el usuario: "+user+" actualmente esta en una llamada");
+		if(!user.equals(user1)) {
+			Integer index = server.usuarios.indexOf(user);
+			PrintWriter temp;
+			boolean disp;
+			disp = server.hilosClientes.get(index).getDisponible();
+			if (disp) {
+				temp = server.hilosClientes.get(index).out;
+				sendMessage("llamando a " + user + "...");
+				sendMessage(user1, temp, 5);
+			} else {
+				sendMessage("el usuario: " + user + " actualmente esta en una llamada");
+			}
+		}else{
+			sendMessage("no puede llamarse a si mismo");
 		}
 	}
 	public void conectar(String user) throws IOException {
 
-		sendMessage("llamada de: "+user+"\n desea recibir la llamada? y/n");
-		String c = readMessage();
-		if(c.equals("y")) {
-			Integer index = server.usuarios.indexOf(user);
-			PrintWriter temp;
-			temp = server.hilosClientes.get(index).out;
-			sendMessage(user1, temp, 6);
+		sendMessage("llamada de "+user+"\n desea recibir la llamada? y/n");
 
-		}
-		else{
-			sendMessage("llamada rechazada");
-		}
+		int bandera=1;
+		Integer index = server.usuarios.indexOf(user);
+		PrintWriter temp;
+		temp = server.hilosClientes.get(index).out;
+		do {
+			String c = readMessage();
+			if (c.equals("y")) {
+
+				sendMessage(user1, temp, 6);
+				bandera = 2;
+
+			} else if (c.equals("n")) {
+				sendMessage("llamada rechazada");
+				sendMessage(user1+" a rechazado tu llamada",temp,3);
+				bandera = 2;
+			} else{
+				sendMessage("por favor ingrese una opción valida: y/n");
+			}
+		}while(bandera==1);
 
 	}
 	public void run() {
