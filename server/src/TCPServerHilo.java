@@ -54,7 +54,10 @@ public class TCPServerHilo extends Thread{
 
 		msg.createMessage(user,op);
 		//enviamos el objeto convertido a String en notacion JSON
-		salida.println( msg.toJSON() ) ;
+
+		salida.println(msg.toJSON()) ;
+
+
 	}
 	/**
 	 * lee un String que es el mensaje enviado por el cliente en notacion JSON lo convierte a objeto y guarda en varable de clase msg 
@@ -66,12 +69,7 @@ public class TCPServerHilo extends Thread{
 		msg.toMessage(word);
 		return msg.getMessage();
 	}
-	Message salida;
-	public String readout() throws IOException {
-		String word =  out.toString();
-		salida.toMessage(word);
-		return salida.getMessage();
-	}
+
 	public String readMessage(BufferedReader e) throws IOException {
 		String word =  e.readLine();
 		msg.toMessage(word);
@@ -98,6 +96,7 @@ public class TCPServerHilo extends Thread{
 	 * se lee y envia mensajes con el cliente, se mantiene con un while true
 	 * @throws IOException
 	 */
+	String g;
 	public void communication() throws IOException
 	{
 		String inputLine, outputLine;
@@ -107,19 +106,20 @@ public class TCPServerHilo extends Thread{
 		while (true) {
 			//leemos mensaje del cliente, viene en notacion JSON , lo guardamos en msg y extraemos el mensaje
 			inputLine = readMessage();
-
+			//g=inputLine;
 			operation = msg.getOperation();
 
 			if (operation.equals(4)) {
 				break;
 			} else if( operation.equals(2) ) {
-				iniciarllamada();
+				conectarllamada();
+				//iniciarllamada();
 				//conect();
 
-			}
-			else if (operation.equals(5))
-			{
-				sendMessage("ola");
+			} else if(operation.equals(5)){
+				conectar(inputLine);
+			}else if(operation.equals(6)){
+				connectToUse(inputLine);
 			}
 			sendMessage(inputLine);
 		}
@@ -137,20 +137,22 @@ public class TCPServerHilo extends Thread{
 		//printMessage( server.usuarios.get(0) );
 	}
 	
-	public void connectToUse(Integer index) throws IOException {
+	public void connectToUse(String user) throws IOException {
 
+		Integer index = server.usuarios.indexOf(user);
 		PrintWriter temp  = out;
 		out = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = temp;
 	
 	}
-	public void iniciarllamada() throws IOException {
+	/*public void iniciarllamada() throws IOException {
 
 		sendMessage("ingrese el nombre del otro cliente");
 		String user = readMessage();
 		Integer index = server.usuarios.indexOf(user);
 		PrintWriter temp;
 		BufferedReader temp2;
+		String g;
 		temp= server.hilosClientes.get(index).out;
 		temp2= server.hilosClientes.get(index).in;
 		sendMessage(user1,temp,5);
@@ -162,8 +164,31 @@ public class TCPServerHilo extends Thread{
 		}else
 			sendMessage("no se pudo conectar");
 
-	}
-	public void conect() throws IOException {
+	}*/
+	/*public void conect() throws IOException {
+
+		sendMessage("ingrese el nombre del otro cliente");
+		String user = readMessage();
+		Integer index = server.usuarios.indexOf(user);
+		PrintWriter temp;
+		String temp2;
+
+		temp= server.hilosClientes.get(index).out;
+		sendMessage(user1,temp,5);
+		temp2= server.hilosClientes.get(index).g;
+
+		while(temp2==null){
+			sendMessage("respuesta del estimado "+temp2);
+			temp2= server.hilosClientes.get(index).g;
+		}
+		if(temp2.equals("y")) {
+			sendMessage("conectado");
+			connectToUse(index);
+		}else
+			sendMessage("no se pudo conectar");
+
+	}*/
+	public void conectarllamada() throws IOException {
 
 		sendMessage("ingrese el nombre del otro cliente");
 		String user = readMessage();
@@ -173,22 +198,19 @@ public class TCPServerHilo extends Thread{
 		sendMessage(user1,temp,5);
 
 	}
-	public void aceptar(Integer User) throws IOException {
+	public void conectar(String user) throws IOException {
 
-		sendMessage("Desea recibir la llamada y/n");
-		String inputLine = readMessage();
-		int index = server.usuarios.indexOf(User);
-		Integer op;
-		if(inputLine.equals("y")){
-			op=6;
+		sendMessage("llamada de: "+user+"\n desea recibir la llamada? y/n");
+		String c = readMessage();
+		if(c.equals("y")) {
+			Integer index = server.usuarios.indexOf(user);
+			PrintWriter temp;
+			temp = server.hilosClientes.get(index).out;
+			sendMessage(user1, temp, 6);
 		}
 		else{
-			op=7;
+			sendMessage("llamada rechazada");
 		}
-		PrintWriter temp;
-		temp= server.hilosClientes.get(index).out;
-		sendMessage(user1,temp,op);
-
 
 	}
 	public void run() {

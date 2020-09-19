@@ -25,7 +25,7 @@ public class Message {
 
 	/**
 	 * Convierte un objeto Message a un String en formato JSON
-	 * @param Mensaje 
+	 * //@param //Mensaje
 	 * @return String JSON
 	 */
 	@SuppressWarnings("unchecked")
@@ -41,9 +41,9 @@ public class Message {
 
 	/**
 	 * Convierto un String en notacion JSON a un objeto Message
-	 * @param String 
-	 * @return Objeto Message
-	 * @throws ParseException
+	 * //@param //String
+	 * //@return Objeto Message
+	 * //@throws ParseException
 	 */
 	public void toMessage(String str) {
 
@@ -71,6 +71,7 @@ public class Message {
 	}
 
 	public void createMessage(String word) {
+
 		if( word.equals("llamar") ) {
 			status = 0;
 			statusDetail = "ok";
@@ -84,21 +85,23 @@ public class Message {
 		}
 	}
 
-	public void createMessage(String word , Integer operation ) {
+	public void createMessage(String word,Integer op ) {
+
+
 		status = 0;
 		statusDetail = "ok";
-		operation = operation;
+		operation = op;
 		message = word;
 
 	}
 
-	public void createMessage(Integer operation ) {
+	/*public void createMessage(Integer op ) {
 		status = 0;
 		statusDetail = "ok";
-		operation = operation;
+		operation = op;
 		message = "";
 
-	}
+	}*/
 	
 	public Integer getStatus() {
 		return status;
