@@ -82,7 +82,14 @@ public class Message {
 			statusDetail = "ok";
 			operation = 2;
 			message = word;
-		}else {
+		}
+		else if (word.equals("Terminar")) {
+			status = 0;
+			statusDetail = "ok";
+			operation = 4;
+			message = word;
+		}
+		else {
 			status = 0;
 			statusDetail = "ok";
 			operation = 3;

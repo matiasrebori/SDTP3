@@ -10,6 +10,7 @@ public class TCPServerHilo extends Thread{
 	Message msg;
 
 	String user1;
+	String user2 = null;
 	Boolean disponible;
 
 	public TCPServerHilo( Socket socket, TCPMultiServer servidor) throws IOException {
@@ -113,7 +114,7 @@ public class TCPServerHilo extends Thread{
 			if (operation.equals(1) && disp ) {
 				listUsers();
 			} else if (operation.equals(4)) {
-				break;
+				desconectarLlamada();
 			} else if( operation.equals(2) && disp ) {
 				conectarllamada();
 
@@ -177,6 +178,20 @@ public class TCPServerHilo extends Thread{
 		server.hilosClientes.get(index).out = temp;
 	
 	}
+	
+	public void desconectarLlamada() throws IOException {
+
+		Integer index = server.usuarios.indexOf(user2);
+		PrintWriter temp  = server.hilosClientes.get(index).out;	
+		server.hilosClientes.get(index).out = out;
+		out = temp;
+		setDisponible(true);// marcar como desocupado el hilo
+		server.hilosClientes.get(index).setDisponible(true);// marcar como desocupado el hilo
+		sendMessage("Llamada finalizada con "+user2);
+		user2 = null;
+	
+	}
+	
 
 	public void conectarllamada() throws IOException {
 
@@ -189,6 +204,7 @@ public class TCPServerHilo extends Thread{
 			boolean disp;
 			disp = server.hilosClientes.get(index).getDisponible();
 			if (disp) {
+				user2 = user;
 				temp = server.hilosClientes.get(index).out;
 				sendMessage("llamando a " + user + "...");
 				sendMessage(user1, temp, 5);
@@ -214,6 +230,7 @@ public class TCPServerHilo extends Thread{
 			String c = readMessage();
 			if (c.equals("y")) {
 
+				user2 = user;
 				sendMessage(user1, temp, 6);
 				bandera = 2;
 
