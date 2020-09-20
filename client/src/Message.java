@@ -101,13 +101,13 @@ public class Message {
 
 	}
 
-	/*public void createMessage(Integer op ) {
+	public void createMessage(Integer op ) {
 		status = 0;
 		statusDetail = "ok";
 		operation = op;
 		message = "";
 
-	}*/
+	}
 	
 	public Integer getStatus() {
 		return status;

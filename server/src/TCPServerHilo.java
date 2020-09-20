@@ -95,34 +95,33 @@ public class TCPServerHilo extends Thread{
 	 * se lee y envia mensajes con el cliente, se mantiene con un while true
 	 * @throws IOException
 	 */
-	String g;
+
 	public void communication() throws IOException
 	{
-		String inputLine, outputLine;
-		Integer operation,operation2;
-		Integer bandera;
-		
+		String inputLine;
+		Integer operation;
+
+		boolean disp;
 		while (true) {
 			//leemos mensaje del cliente, viene en notacion JSON , lo guardamos en msg y extraemos el mensaje
 			inputLine = readMessage();
-			//g=inputLine;
+
 			operation = msg.getOperation();
 
+			disp=getDisponible();
 
-			if (operation.equals(1)) {
+			if (operation.equals(1) && disp ) {
 				listUsers();
 			} else if (operation.equals(4)) {
 				break;
-			} else if( operation.equals(2) ) {
+			} else if( operation.equals(2) && disp ) {
 				conectarllamada();
-				//iniciarllamada();
-				//conect();
 
 			} else if(operation.equals(5)){
 				conectar(inputLine);
 			}else if(operation.equals(6)){
 				connectToUse(inputLine);
-			}else if(operation.equals(3))
+			}else if( !disp)
 			sendMessage(inputLine);
 		}
 	}
