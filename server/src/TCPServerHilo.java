@@ -123,7 +123,7 @@ public class TCPServerHilo extends Thread{
 			}else if(operation.equals(6)){
 				connectToUse(inputLine);
 			}else if( !disp)
-			sendMessage(inputLine);
+			sendMessage(user1+": " + inputLine);
 		}
 	}
 
