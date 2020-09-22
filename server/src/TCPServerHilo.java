@@ -113,7 +113,7 @@ public class TCPServerHilo extends Thread{
 
 			if (operation.equals(1) && disp ) {
 				listUsers();
-			} else if (operation.equals(4)) {
+			} else if (operation.equals(4) && !disp) {
 				desconectarLlamada();
 			} else if( operation.equals(2) && disp ) {
 				conectarllamada();
