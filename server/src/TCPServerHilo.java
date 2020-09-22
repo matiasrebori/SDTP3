@@ -237,7 +237,7 @@ public class TCPServerHilo extends Thread{
 
 			} else if (c.equals("n")) {
 				sendMessage("llamada rechazada");
-				sendMessage(user1+" a rechazado tu llamada",temp,3);
+				sendMessage(user1+" a rechazado tu llamada",temp,108);
 				bandera = 2;
 			} else{
 				sendMessage("por favor ingrese una opción valida: y/n");
