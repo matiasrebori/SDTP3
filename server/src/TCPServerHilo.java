@@ -173,7 +173,7 @@ public class TCPServerHilo extends Thread{
 		setDisponible(false);// marcar como ocupado el hilo
 		server.hilosClientes.get(index).setDisponible(false);// marcar como ocupado el hilo
 		sendMessage("conectado con "+user);
-		sendMessage("conectado con "+user1,server.hilosClientes.get(index).out,3);
+		sendMessage("conectado con "+user1,server.hilosClientes.get(index).out,108);
 		out = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = temp;
 	
@@ -188,6 +188,7 @@ public class TCPServerHilo extends Thread{
 		setDisponible(true);// marcar como desocupado el hilo
 		server.hilosClientes.get(index).setDisponible(true);// marcar como desocupado el hilo
 		sendMessage("Llamada finalizada con "+user2);
+		sendMessage("Llamada finalizada con "+user1,server.hilosClientes.get(index).out,108);
 		user2 = null;
 	
 	}
