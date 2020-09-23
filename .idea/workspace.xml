@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7f4096fb-8687-4741-948c-356a2339efc3" name="Default Changelist" comment="">
+    <list default="true" id="33308bcf-e345-4d32-aaa6-3f51c645fabd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/TCPMultiServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/TCPMultiServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/TCPServerHilo.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/TCPServerHilo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,7 +14,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1hporaxMXGquBoppJlkIGocHKQ1" />
+  <component name="ProjectId" id="1ht2nKD21mgZhsOVrlj06Mftytd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -22,6 +23,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -44,13 +46,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -69,16 +73,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="7f4096fb-8687-4741-948c-356a2339efc3" name="Default Changelist" comment="" />
-      <created>1600717598678</created>
+      <changelist id="33308bcf-e345-4d32-aaa6-3f51c645fabd" name="Default Changelist" comment="" />
+      <created>1600816238237</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1600717598678</updated>
-      <workItem from="1600717605022" duration="2841000" />
-      <workItem from="1600742868786" duration="1410000" />
-      <workItem from="1600747454649" duration="624000" />
-      <workItem from="1600748223296" duration="381000" />
-      <workItem from="1600785038461" duration="586000" />
+      <updated>1600816238237</updated>
+      <workItem from="1600816239415" duration="3262000" />
+      <workItem from="1600822085040" duration="991000" />
     </task>
     <servers />
   </component>
@@ -86,29 +87,37 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="134" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600743444948">
+    <state x="134" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600816482812">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state x="134" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.728@0.0.1360.728" timestamp="1600743444948" />
-    <state width="1323" height="174" key="GridCell.Tab.0.bottom" timestamp="1600785341097">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="134" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.728@0.0.1360.728" timestamp="1600816482812" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1600822491581">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1317" height="174" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1600748077256" />
-    <state width="1323" height="174" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1600785341097" />
-    <state width="1323" height="174" key="GridCell.Tab.0.center" timestamp="1600785341097">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600822491581" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1600822330687">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1317" height="174" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1600748077256" />
-    <state width="1323" height="174" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1600785341097" />
-    <state width="1323" height="174" key="GridCell.Tab.0.left" timestamp="1600785341097">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1600822330687" />
+    <state width="1877" height="108" key="GridCell.Tab.0.bottom" timestamp="1600822481277">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1317" height="174" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1600748077256" />
-    <state width="1323" height="174" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1600785341097" />
-    <state width="1323" height="174" key="GridCell.Tab.0.right" timestamp="1600785341097">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1317" height="312" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1600819503541" />
+    <state width="1877" height="108" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600822481277" />
+    <state width="1877" height="108" key="GridCell.Tab.0.center" timestamp="1600822481277">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1317" height="174" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1600748077256" />
-    <state width="1323" height="174" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1600785341097" />
+    <state width="1317" height="312" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1600819503540" />
+    <state width="1877" height="108" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600822481277" />
+    <state width="1877" height="108" key="GridCell.Tab.0.left" timestamp="1600822481277">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1317" height="312" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1600819503540" />
+    <state width="1877" height="108" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600822481277" />
+    <state width="1877" height="108" key="GridCell.Tab.0.right" timestamp="1600822481277">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1317" height="312" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1600819503540" />
+    <state width="1877" height="108" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600822481277" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 import java.net.*;
 import java.io.*;
+import java.util.Date;
 
 public class TCPServerHilo extends Thread{
 	TCPMultiServer server;
@@ -14,18 +15,18 @@ public class TCPServerHilo extends Thread{
 	Boolean disponible;
 
 	public TCPServerHilo( Socket socket, TCPMultiServer servidor) throws IOException {
-        super("TCPServerHilo");
-        clientSocket = socket;
+		super("TCPServerHilo");
+		clientSocket = socket;
 		server = servidor;
 		server.usuarios.add("");
-		
+
 		// buffer enviamos nosotros
 		out = new PrintWriter(clientSocket.getOutputStream(), true);
 		// buffer recibimos del cliente
 		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		// buffer para escribir por teclado
 		stdIn = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		//Mensaje
 		msg = new Message();
 	}
@@ -43,7 +44,7 @@ public class TCPServerHilo extends Thread{
 	/**
 	 * convierte una palabra en objeto Message luego lo pasa a notacion JSON y lo envia al stream del cliente
 	 * @param word
-	 * 
+	 *
 	 */
 	public void sendMessage(String word) {
 		//convierto la palabra en objeto Message
@@ -60,7 +61,7 @@ public class TCPServerHilo extends Thread{
 		salida.println(msg.toJSON()) ;
 	}
 	/**
-	 * lee un String que es el mensaje enviado por el cliente en notacion JSON lo convierte a objeto y guarda en varable de clase msg 
+	 * lee un String que es el mensaje enviado por el cliente en notacion JSON lo convierte a objeto y guarda en varable de clase msg
 	 * @return String Mensaje enviado por el cliente
 	 * @throws IOException
 	 */
@@ -77,17 +78,17 @@ public class TCPServerHilo extends Thread{
 	}
 	/**
 	 * lee el teclado
-	 * @return 
+	 * @return
 	 * @throws IOException
 	 */
 	public String read() throws IOException {
 		return stdIn.readLine();
 	}
-	
+
 	/**
 	 * imprime en la consola el mensaje recibido del cliente
 	 * @param word
-	 * 
+	 *
 	 */
 	public void printMessage(String word) {
 		System.out.println("Mensaje recibido: " + word);
@@ -99,36 +100,50 @@ public class TCPServerHilo extends Thread{
 
 	public void communication() throws IOException
 	{
-		String inputLine;
+		String inputLine = "";
 		Integer operation;
 
 		boolean disp;
 		while (true) {
 			//leemos mensaje del cliente, viene en notacion JSON , lo guardamos en msg y extraemos el mensaje
-			inputLine = readMessage();
 
-			operation = msg.getOperation();
+			try {
+				inputLine = readMessage();
 
-			disp=getDisponible();
+				operation = msg.getOperation();
 
-			if (operation.equals(1) && disp ) {
-				listUsers();
-			} else if (operation.equals(4) && !disp) {
-				desconectarLlamada();
-			} else if( operation.equals(2) && disp ) {
-				conectarllamada();
+				disp=getDisponible();
 
-			} else if(operation.equals(5)){
-				conectar(inputLine);
-			}else if(operation.equals(6)){
-				connectToUse(inputLine);
-			}else if( !disp)
-			sendMessage(user1+": " + inputLine);
+				if (operation.equals(1) && disp ) {
+					listUsers();
+				} else if (operation.equals(4) && !disp) {
+					desconectarLlamada();
+				} else if( operation.equals(2) && disp ) {
+					conectarllamada();
+				} else if(operation.equals(5)){
+					conectar(inputLine);
+				}else if(operation.equals(6)){
+					connectToUse(inputLine);
+				}else if( !disp)
+					sendMessage(user1 + ": " + inputLine);
+
+			}catch(IOException e1){ //si ocurre un error en la lectura de algun mensaje recibido se cierra el hilo
+				if (!getDisponible())
+					desconectarLlamada();
+
+				server.hilosClientes.remove(this);
+				server.usuarios.remove(user1);
+				close();
+				Thread.currentThread().interrupt();
+				System.out.println("Thread que maneja al Usuario " +user1+ " fue eliminado: " + Thread.interrupted());
+				break;
+			}
+
 		}
 	}
 
 	public void listUsers() {
-	String lista="";
+		String lista="";
 		sendMessage("Lista de Usuarios conectados");
 
 		for (String i : server.usuarios) {
@@ -151,9 +166,13 @@ public class TCPServerHilo extends Thread{
 				System.out.println("Index de este hilo en hilosClientes:" + index);
 				user1 = user;
 				server.usuarios.add(index, user);
-				System.out.println("Usuario:" + user + " a�adido en index:" + index);
-				sendMessage("Usuario A�adido");
+				System.out.println("Usuario:" + user + " añadido en index:" + index);
+				sendMessage("Usuario Añadido");
 				disponible = true;
+				sendMessage("Lista de comandos:\n" +
+						"1) 'lista' para ver a los usuarios conectados\n" +
+						"2) 'llamar' si desea realizar una llamada a un usuario conectado\n" +
+						"3) 'Terminar' si desea finalizar una llamada\n");
 			} else {
 				sendMessage("el usuario " + user + " ya existe, ingrese otro nombre");
 			}
@@ -176,13 +195,13 @@ public class TCPServerHilo extends Thread{
 		sendMessage("conectado con "+user1,server.hilosClientes.get(index).out,108);
 		out = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = temp;
-	
+
 	}
-	
+
 	public void desconectarLlamada() throws IOException {
 
 		Integer index = server.usuarios.indexOf(user2);
-		PrintWriter temp  = server.hilosClientes.get(index).out;	
+		PrintWriter temp  = server.hilosClientes.get(index).out;
 		server.hilosClientes.get(index).out = out;
 		out = temp;
 		setDisponible(true);// marcar como desocupado el hilo
@@ -190,9 +209,9 @@ public class TCPServerHilo extends Thread{
 		sendMessage("Llamada finalizada con "+user2);
 		sendMessage("Llamada finalizada con "+user1,server.hilosClientes.get(index).out,108);
 		user2 = null;
-	
+
 	}
-	
+
 
 	public void conectarllamada() throws IOException {
 
@@ -235,6 +254,9 @@ public class TCPServerHilo extends Thread{
 				sendMessage(user1, temp, 6);
 				bandera = 2;
 
+				writeFile(java.util.Calendar.getInstance().getTime()+ " Usuario 1 '"+ user1+ "' con ip "+ clientSocket.getInetAddress().toString()+
+						" ha iniciado una llamada con el usuario '"+user2+"' con ip "+server.hilosClientes.get(index).clientSocket.getInetAddress());
+
 			} else if (c.equals("n")) {
 				sendMessage("llamada rechazada");
 				sendMessage(user1+" a rechazado tu llamada",temp,108);
@@ -245,6 +267,17 @@ public class TCPServerHilo extends Thread{
 		}while(bandera==1);
 
 	}
+	static void writeFile(String a) {
+		try {
+			String filename = "log.txt";
+			FileWriter fw = new FileWriter(filename, true);
+			fw.write(a + "\n");
+			fw.close();
+		} catch (IOException ioe) {
+			System.err.println("Ha ocurrido un error tratando de registrar en el log");
+		}
+	}
+
 	public void run() {
 		try {
 			//sendMessage("Bienvenido");
@@ -252,10 +285,8 @@ public class TCPServerHilo extends Thread{
 			communication();
 			close();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
-	
 }
 
