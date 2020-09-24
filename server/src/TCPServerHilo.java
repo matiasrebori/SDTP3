@@ -116,25 +116,37 @@ public class TCPServerHilo extends Thread{
 		boolean disp;
 		while (true) {
 			//leemos mensaje del cliente, viene en notacion JSON , lo guardamos en msg y extraemos el mensaje
-			inputLine = readMessage();
+			try {
+				inputLine = readMessage();
 
-			operation = msg.getOperation();
+				operation = msg.getOperation();
 
-			disp=getDisponible();
+				disp = getDisponible();
 
-			if (operation.equals(1) && disp ) {
-				listUsers();
-			} else if (operation.equals(4) && !disp) {
-				desconectarLlamada();
-			} else if( operation.equals(2) && disp ) {
-				conectarllamada();
+				if (operation.equals(1) && disp) {
+					listUsers();
+				} else if (operation.equals(4) && !disp) {
+					desconectarLlamada();
+				} else if (operation.equals(2) && disp) {
+					conectarllamada();
 
-			} else if(operation.equals(5)){
-				conectar(inputLine);
-			}else if(operation.equals(6)){
-				connectToUse(inputLine);
-			}else if( !disp)
-			sendMessage(user1+": " + inputLine);
+				} else if (operation.equals(5)) {
+					conectar(inputLine);
+				} else if (operation.equals(6)) {
+					connectToUse(inputLine);
+				} else if (!disp)
+					sendMessage(user1 + ": " + inputLine);
+			}catch(IOException e1){ //si ocurre un error en la lectura de algun mensaje recibido se cierra el hilo
+				if (!getDisponible())
+					desconectarLlamada();
+
+				server.hilosClientes.remove(this);
+				server.usuarios.remove(user1);
+				close();
+				Thread.currentThread().interrupt();
+				System.out.println("Usuario " + user1 +" se ha desconectado");
+				break;
+			}
 		}
 	}
 
@@ -162,9 +174,13 @@ public class TCPServerHilo extends Thread{
 				System.out.println("Index de este hilo en hilosClientes:" + index);
 				user1 = user;
 				server.usuarios.add(index, user);
-				System.out.println("Usuario:" + user + " a�adido en index:" + index);
-				sendMessage("Usuario A�adido");
+				System.out.println("Usuario:" + user + " añadido en index:" + index);
+				sendMessage("Usuario Añadido");
 				disponible = true;
+				sendMessage("Lista de comandos:\n" +
+						"1) 'lista' para ver a los usuarios conectados\n" +
+						"2) 'llamar' si desea realizar una llamada a un usuario conectado\n" +
+						"3) 'Terminar' si desea finalizar una llamada\n");
 			} else {
 				sendMessage("el usuario " + user + " ya existe, ingrese otro nombre");
 			}
@@ -264,10 +280,7 @@ public class TCPServerHilo extends Thread{
 
 
 
-
-
-
-				logger.log(Level.INFO, "CONEXION ESTABLECIDA ENTRE USUARIOS"); //log de conexion establecida
+				logger.log(Level.INFO, " [USER "+ user1+", IP "+ clientSocket.getInetAddress().toString().substring(1)+ "] INICIO LLAMADA CON [USER "+user2+", IP "+server.hilosClientes.get(index).clientSocket.getInetAddress().toString().substring(1)+"]"); //log de conexion establecida
 
 			} else if (c.equals("n")) {
 				sendMessage("llamada rechazada");
