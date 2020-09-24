@@ -1,6 +1,6 @@
 import java.net.*;
 import java.io.*;
-import java.util.Date;
+
 
 public class TCPServerHilo extends Thread{
 	TCPMultiServer server;
@@ -135,7 +135,7 @@ public class TCPServerHilo extends Thread{
 				server.usuarios.remove(user1);
 				close();
 				Thread.currentThread().interrupt();
-				System.out.println("Thread que maneja al Usuario " +user1+ " fue eliminado: " + Thread.interrupted());
+				System.out.println("Usuario " + user1 +" se ha desconectado");
 				break;
 			}
 
@@ -254,9 +254,6 @@ public class TCPServerHilo extends Thread{
 				sendMessage(user1, temp, 6);
 				bandera = 2;
 
-				writeFile(java.util.Calendar.getInstance().getTime()+ " Usuario 1 '"+ user1+ "' con ip "+ clientSocket.getInetAddress().toString()+
-						" ha iniciado una llamada con el usuario '"+user2+"' con ip "+server.hilosClientes.get(index).clientSocket.getInetAddress());
-
 			} else if (c.equals("n")) {
 				sendMessage("llamada rechazada");
 				sendMessage(user1+" a rechazado tu llamada",temp,108);
@@ -267,17 +264,7 @@ public class TCPServerHilo extends Thread{
 		}while(bandera==1);
 
 	}
-	static void writeFile(String a) {
-		try {
-			String filename = "log.txt";
-			FileWriter fw = new FileWriter(filename, true);
-			fw.write(a + "\n");
-			fw.close();
-		} catch (IOException ioe) {
-			System.err.println("Ha ocurrido un error tratando de registrar en el log");
-		}
-	}
-
+	
 	public void run() {
 		try {
 			//sendMessage("Bienvenido");
