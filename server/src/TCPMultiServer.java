@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
-import java.io.File;
+
 public class TCPMultiServer {
 
 	//variables compartidas
@@ -24,7 +24,7 @@ public class TCPMultiServer {
 
         while (listening) {
         	
-        	TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
+            TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
             hilosClientes.add(hilo);
            
             hilo.start();
@@ -38,7 +38,6 @@ public class TCPMultiServer {
     public static void main(String[] args) throws IOException {
     	
     	TCPMultiServer tms = new TCPMultiServer();
-    	createFile();
     	tms.hilosClientes = new ArrayList<TCPServerHilo>();
     	tms.usuarios = new ArrayList<String>();
     	
@@ -46,18 +45,6 @@ public class TCPMultiServer {
     	
     }
 
-    static void createFile() {
-            try {
-                File myObj = new File("log.txt");
-                if (myObj.createNewFile()) {
-                    System.out.println("Archivo de logs creado: " + myObj.getName());
-                } else {
-                    System.out.println("Archivo de logs ya existente.");
-                }
-            } catch (IOException e) {
-                System.out.println("Un error ha ocurrido al intentar crear el log.");
-                e.printStackTrace();
-            }
-        }
+    
 }
 
