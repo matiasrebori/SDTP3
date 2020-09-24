@@ -8,8 +8,8 @@ public class TCPMultiServer {
 
 	//variables compartidas
 	boolean listening = true;
-	List<TCPServerHilo> hilosClientes; //almacenar los hilos
-	List<String> usuarios; //almacenar una lista de usuarios
+	List<TCPServerHilo> hilosClientes; //almacenar los hilos (no se utiliza en el ejemplo, se deja para que el alumno lo utilice)
+	List<String> usuarios; //almacenar una lista de usuarios (no se utiliza, se deja para que el alumno lo utilice)
 
     public void ejecutar() throws IOException {
         ServerSocket serverSocket = null;
@@ -24,7 +24,7 @@ public class TCPMultiServer {
 
         while (listening) {
         	
-            TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
+        	TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
             hilosClientes.add(hilo);
            
             hilo.start();
@@ -38,13 +38,12 @@ public class TCPMultiServer {
     public static void main(String[] args) throws IOException {
     	
     	TCPMultiServer tms = new TCPMultiServer();
+    	
     	tms.hilosClientes = new ArrayList<TCPServerHilo>();
     	tms.usuarios = new ArrayList<String>();
     	
     	tms.ejecutar();
     	
     }
-
-    
 }
 
