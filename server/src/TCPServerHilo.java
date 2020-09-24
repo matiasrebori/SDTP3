@@ -1,6 +1,9 @@
 import java.net.*;
 import java.io.*;
 
+import java.util.logging.*; //INCLUIMOS LA LIBRERIA CORRESPONDIENTE A LOS LOGS
+
+
 public class TCPServerHilo extends Thread{
 	TCPMultiServer server;
 	Socket clientSocket;
@@ -12,6 +15,14 @@ public class TCPServerHilo extends Thread{
 	String user1;
 	String user2 = null;
 	Boolean disponible;
+
+	//LOG OBJECTS
+	private final static Logger logger;
+
+	static {
+		logger = Logger.getLogger("LogTCPServerHilo");
+	}
+
 
 	public TCPServerHilo( Socket socket, TCPMultiServer servidor) throws IOException {
         super("TCPServerHilo");
@@ -234,6 +245,29 @@ public class TCPServerHilo extends Thread{
 				user2 = user;
 				sendMessage(user1, temp, 6);
 				bandera = 2;
+
+				LogManager.getLogManager().reset(); // RESETEAR TODOS LOS LOG MANAGER QUE EXISTAN
+				logger.setLevel(Level.ALL); //PASAR TODOS LOS NIVELS DE EVENTOS AL LOG
+
+				ConsoleHandler consoleHandler = new ConsoleHandler(); // Creamos un manejador de logs para consola
+				consoleHandler.setLevel(Level.INFO);				// seteamos el nivel para dicho manejador
+				logger.addHandler(consoleHandler); 					// agreamos el manejador a nuestro logger
+
+				try {
+				FileHandler fileHandler = new FileHandler("logLlamadas.log", true);
+				fileHandler.setFormatter(new SimpleFormatter());
+				logger.addHandler(fileHandler);
+				} catch (IOException e) {
+				 //ignorar
+					logger.log(Level.SEVERE, "Archivo log no funiciona", e);
+				}
+
+
+
+
+
+
+				logger.log(Level.INFO, "CONEXION ESTABLECIDA ENTRE USUARIOS"); //log de conexion establecida
 
 			} else if (c.equals("n")) {
 				sendMessage("llamada rechazada");
