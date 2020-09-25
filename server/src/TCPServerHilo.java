@@ -280,7 +280,10 @@ public class TCPServerHilo extends Thread{
 
 
 
-				logger.log(Level.INFO, " [USER "+ user1+", IP "+ clientSocket.getInetAddress().toString().substring(1)+ "] INICIO LLAMADA CON [USER "+user2+", IP "+server.hilosClientes.get(index).clientSocket.getInetAddress().toString().substring(1)+"]"); //log de conexion establecida
+				logger.log(Level.INFO, " [USUARIO "+ user1+", IP "+ clientSocket.getInetAddress().toString().substring(1)+
+						", PUERTO "+clientSocket.getPort() + "] INICIÓ LLAMADA CON [USUARIO "+user2+", IP "+
+						server.hilosClientes.get(index).clientSocket.getInetAddress().toString().substring(1)+", PUERTO "+
+						server.hilosClientes.get(index).clientSocket.getPort()+"]"); //log de conexion establecida
 
 			} else if (c.equals("n")) {
 				sendMessage("llamada rechazada");
