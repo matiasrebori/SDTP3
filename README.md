@@ -12,11 +12,7 @@ Requerimientos de instalación.
 	*IDE que pueda correr proyectos de Eclipse (Ej.Intellij) 
 	*Ejecutado por terminal
 
-Cómo crear la estructura de Base de datos.
-	?
-
-Cómo poblar los datos iniciales necesarios de Base de datos.
-	?
+No se utiliza base de datos.
 
 Ejecución de servidor.
 	*Ejecutar TCPMultiServer
@@ -27,7 +23,7 @@ Ejecicion de clientes.
 
 Especificar la forma de invocación y parámetros de cada servicio ofrecido por el servidor.
 			
-			Se solicita el nombre de usuario al momento de conectar con el servidor
-			1) 'lista' para ver a los usuarios conectados 
-			2) 'llamar' si desea realizar una llamada a un usuario conectado
-			3) 'Terminar' si desea finalizar una llamada
+	Se solicita el nombre de usuario al momento de conectar con el servidor
+		1) 'lista' para ver a los usuarios conectados 
+		2) 'llamar' si desea realizar una llamada a un usuario conectado
+		3) 'terminar' si desea finalizar una llamada
