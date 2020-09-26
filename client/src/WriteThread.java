@@ -50,14 +50,14 @@ public class WriteThread extends Thread{
 				fromUser = msg.toJSON();
 				// enviamos al servidor
 				sendMessage(fromUser);
-				
+				/*
 				//if usuario escribe Bye se envio al servidor y cerramos los hilos Write, Read a traves de TCPClient
 				if (fromUser.equals("Bye")) {
 					stdIn.close();
 					client.stop();
 					break;
 					
-				}
+				}*/
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
