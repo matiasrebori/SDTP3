@@ -83,7 +83,7 @@ public class Message {
 			operation = 2;
 			message = word;
 		}
-		else if (word.equals("Terminar")) {
+		else if (word.equals("terminar")) {
 			status = 0;
 			statusDetail = "ok";
 			operation = 4;
@@ -105,13 +105,6 @@ public class Message {
 
 	}
 
-	public void createMessage(Integer op ) {
-		status = 0;
-		statusDetail = "ok";
-		operation = op;
-		message = "";
-
-	}
 
 	
 	public Integer getStatus() {

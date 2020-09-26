@@ -26,7 +26,8 @@ public class TCPMultiServer {
         	
         	TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
             hilosClientes.add(hilo);
-           
+            //se crea un nuevo elemento en el array de usuarios cada vez que se inicia un hilo TCPServerHilo
+            usuarios.add("");
             hilo.start();
             
            
