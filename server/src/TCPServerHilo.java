@@ -176,7 +176,7 @@ public class TCPServerHilo extends Thread{
 				sendMessage("Lista de comandos:\n" +
 						"1) 'lista' para ver a los usuarios conectados\n" +
 						"2) 'llamar' si desea realizar una llamada a un usuario conectado\n" +
-						"3) 'Terminar' si desea finalizar una llamada\n");
+						"3) 'terminar' si desea finalizar una llamada\n");
 			} else {
 				sendMessage("el usuario " + user + " ya existe, ingrese otro nombre");
 			}
